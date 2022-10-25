@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_docs_clone/custom_colors.dart';
+import 'package:google_docs_clone/services/auth_service.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
+  void signInwithGoogle(WidgetRef ref) {
+    ref.read(authServiceProvider).signInWithGoogle();
+  }
 
-class _LoginScreenState extends State<LoginScreen> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Colors.white54,
       body: Center(
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 15,
             ),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () => signInwithGoogle(ref),
               icon: Image.asset(
                 'assets/images/google-logo.png',
                 height: 20,
