@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_docs_clone/custom_colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const Text(
               'DOCS',
               style: TextStyle(
-                color: Colors.black,
+                color: AppColors.primaryFontColor,
                 fontSize: 40,
               ),
             ),
@@ -50,7 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               label: const Text(
                 'Login With Google',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(
+                  color: AppColors.primaryFontColor,
+                  fontSize: 18,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(150, 50),
@@ -65,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   side: BorderSide(
                     color: Colors.blueAccent,
+                    width: 1.5,
                   ),
                 ),
               ),
