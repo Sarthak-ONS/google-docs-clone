@@ -8,15 +8,18 @@ class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   void signInwithGoogle(WidgetRef ref, BuildContext context) async {
+    final sMessenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
     final errorModel = await ref.read(authServiceProvider).signInWithGoogle();
     if (errorModel.error == null) {
       ref.read(userProvider.notifier).update((state) => errorModel.data);
-      Navigator.push(context,
-          MaterialPageRoute(builder: ((context) => const HomeScreen())));
+      navigator.push(
+        MaterialPageRoute(
+          builder: ((context) => const HomeScreen()),
+        ),
+      );
     } else {
-      print("Error Model is null ");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(errorModel.error!)));
+      sMessenger.showSnackBar(SnackBar(content: Text(errorModel.error!)));
     }
   }
 

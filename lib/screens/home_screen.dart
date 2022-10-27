@@ -13,7 +13,7 @@ class HomeScreen extends ConsumerWidget {
           children: [
             Text(ref.watch(userProvider)!.email),
             Text(ref.watch(userProvider)!.name),
-            SelectableText((ref.watch(userProvider)!.profilePic)),
+            SelectableText((ref.watch(userProvider)!.uid)),
           ],
         ),
       ),
