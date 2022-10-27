@@ -1,18 +1,20 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const authRouter = require('./routes/user');
+const cors = require('cors')
 
 const PORT = process.env.PORT | 4001
 
 
 const app = express()
+app.use(express.json())
+app.use(cors())
+app.use(authRouter)
+
+
 
 const DB = "mongodb+srv://test:test123@flutterfame.v340e8u.mongodb.net/?retryWrites=true&w=majority";
-
-
-
-
-
 
 
 mongoose.connect(DB).then(() => {

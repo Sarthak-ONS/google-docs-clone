@@ -1,23 +1,30 @@
-const express = require('express')
+const e = require('express');
+const express = require('express');
+const User = require('../models/user_model');
 
 
 const authRouter = express.Router();
 
-
-
-authRouter.post('/api/signup', async (req, res) => {
-
+authRouter.post("/api/signup", async (req, res) => {
     try {
-
-
         const { name, email, profilePic } = req.body;
-        
 
+        let user = await User.findOne({ email });
 
-    } catch (error) {
-        console.log(error);
+        if (!user) {
+            user = new User({
+                email,
+                profilePic,
+                name,
+            });
+            user = await user.save();
+        }
+
+        res.json({ user });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
     }
+});
 
-})
 
-
+module.exports = authRouter

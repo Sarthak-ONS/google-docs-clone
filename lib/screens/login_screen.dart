@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_docs_clone/custom_colors.dart';
+import 'package:google_docs_clone/screens/home_screen.dart';
 import 'package:google_docs_clone/services/auth_service.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  void signInwithGoogle(WidgetRef ref) {
-    ref.read(authServiceProvider).signInWithGoogle();
+  void signInwithGoogle(WidgetRef ref, BuildContext context) async {
+    final errorModel = await ref.read(authServiceProvider).signInWithGoogle();
+    if (errorModel.error == null) {
+      ref.read(userProvider.notifier).update((state) => errorModel.data);
+      Navigator.push(context,
+          MaterialPageRoute(builder: ((context) => const HomeScreen())));
+    } else {
+      print("Error Model is null ");
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(errorModel.error!)));
+    }
   }
 
   @override
@@ -45,7 +55,7 @@ class LoginScreen extends ConsumerWidget {
               width: 15,
             ),
             ElevatedButton.icon(
-              onPressed: () => signInwithGoogle(ref),
+              onPressed: () => signInwithGoogle(ref, context),
               icon: Image.asset(
                 'assets/images/google-logo.png',
                 height: 20,
