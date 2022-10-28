@@ -17,6 +17,7 @@ dependencies:
   flutter_riverpod: null
   google_sign_in: ^5.4.2
   http: ^0.13.5
+  routemaster: ^1.0.1
   shared_preferences: ^2.0.15
 
 dev_dependencies:

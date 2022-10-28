@@ -117,4 +117,8 @@ class AuthService {
 
     return error;
   }
+
+  void signout() {
+    _localStorageService.settoken("");
+  }
 }
