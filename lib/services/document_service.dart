@@ -68,9 +68,11 @@ class DocumentService {
       switch (res.statusCode) {
         case 200:
           List<DocumentModel> documents = [];
-          for (var item in jsonDecode(res.body).length) {
-            documents.add(DocumentModel.fromJson(jsonEncode(item)));
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            documents.add(
+                DocumentModel.fromJson(jsonEncode(jsonDecode(res.body)[i])));
           }
+          print(documents);
           error = ErrorModel(error: null, data: documents);
           break;
         default:

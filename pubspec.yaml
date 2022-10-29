@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_quill:
   flutter_riverpod: null
   google_sign_in: ^5.4.2
   http: ^0.13.5
