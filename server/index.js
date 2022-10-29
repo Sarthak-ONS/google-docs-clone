@@ -5,10 +5,17 @@ const authRouter = require('./routes/auth');
 const cors = require('cors');
 const documentRouter = require('./routes/document');
 
+const http = require('http')
+
+const app = express()
+var server = http.createServer(app)
+
+var io = require('socket.io')(server);
+
 const PORT = process.env.PORT | 4001
 
 
-const app = express()
+
 app.use(express.json())
 app.use(cors())
 app.use(authRouter)
@@ -26,7 +33,19 @@ mongoose.connect(DB).then(() => {
     console.log(err);
 })
 
+io.on('connection', (socket) => {
+    console.log('Connected' + socket.id);
+    socket.on('join', (documentId) => {
+        socket.join(documentId)
+    })
 
-app.listen(PORT, () => {
+    socket.on('typing', (data) => {
+        socket.broadcast.to(data.room).emit('changes', data)
+    })
+})
+
+
+
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
