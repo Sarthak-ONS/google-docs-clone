@@ -22,7 +22,7 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: Colors.white54,
+      backgroundColor: Colors.white,
       body: Center(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

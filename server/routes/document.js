@@ -68,5 +68,18 @@ documentRouter.get('/docs/:id', auth, async (req, res) => {
     }
 })
 
+documentRouter.get('/docs/delete/:id', auth, async (req, res) => {
+    try {
+
+        let documents = await Document.findByIdAndDelete(req.params.id);
+
+        res.json(documents)
+
+
+    } catch (error) {
+        res.status(500).json({ err: error.message })
+    }
+})
+
 
 module.exports = documentRouter;

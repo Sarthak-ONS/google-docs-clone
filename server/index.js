@@ -12,7 +12,11 @@ var server = http.createServer(app)
 
 var io = require('socket.io')(server);
 
+
+
 const PORT = process.env.PORT | 4001
+
+const Document = require('./models/document')
 
 
 
@@ -42,8 +46,17 @@ io.on('connection', (socket) => {
     socket.on('typing', (data) => {
         socket.broadcast.to(data.room).emit('changes', data)
     })
-})
 
+    socket.on('save', (data) => {
+        saveData(data);
+    })
+})
+const saveData = async (data) => {
+    if (data.delta == null) return
+    let document = await Document.findById(data.room);
+    document.content = data.delta;
+    document = await document.save();
+}
 
 
 server.listen(PORT, () => {

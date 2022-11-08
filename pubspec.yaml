@@ -18,9 +18,12 @@ dependencies:
   flutter_riverpod: null
   google_sign_in: ^5.4.2
   http: ^0.13.5
+  open_file: ^3.2.1
+  path_provider: null
   routemaster: ^1.0.1
   shared_preferences: ^2.0.15
-  socket_io_client: ^2.0.0
+  socket_io_client: ^1.0.2
+  syncfusion_flutter_pdf: ^20.3.52
 
 dev_dependencies:
   flutter_lints: ^1.0.0

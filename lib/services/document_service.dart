@@ -147,4 +147,38 @@ class DocumentService {
 
     return error;
   }
+
+  Future<ErrorModel> deleteDocumentbyID(
+      {required String token, required String documentId}) async {
+    ErrorModel error =
+        ErrorModel(error: 'Some Unexpected Error has Occured', data: null);
+
+    try {
+      final headerMap = {
+        "Content-Type": "Application/json; charset=UTF-8",
+        'x-auth-token': token
+      };
+      var res = await _client.get(
+        Uri.parse(host + '/docs/delete/$documentId'),
+        headers: headerMap,
+      );
+      switch (res.statusCode) {
+        case 200:
+          error = ErrorModel(
+            error: null,
+            data: DocumentModel.fromJson(res.body),
+          );
+          break;
+        default:
+          throw 'This document does not exists, Please create a new One';
+      }
+    } catch (e) {
+      error = ErrorModel(
+        error: e.toString(),
+        data: null,
+      );
+    }
+
+    return error;
+  }
 }

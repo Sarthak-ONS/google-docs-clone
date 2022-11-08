@@ -39,23 +39,97 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Google DOCS Clone',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        title: Text(
+          'Hi,  ${ref.watch(userProvider)!.name.toString()}, Welcome to DOCS',
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
             letterSpacing: 1,
           ),
         ),
         elevation: 0,
         backgroundColor: AppColors.primayBlueColor,
         actions: [
-          IconButton(
-            onPressed: () => createDocument(context, ref),
-            icon: const Icon(Icons.add),
+          GestureDetector(
+            onTap: () => createDocument(context, ref),
+            child: Row(
+              children: const [
+                Icon(Icons.add),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Create',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
-          IconButton(
-            onPressed: () => signout(ref),
-            icon: const Icon(Icons.exit_to_app),
+          const SizedBox(
+            width: 25,
+          ),
+          GestureDetector(
+            onTap: () {
+              showMenu(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                context: context,
+                position: RelativeRect.fromLTRB(
+                    double.infinity,
+                    MediaQuery.of(context).viewInsets.top + 50,
+                    0,
+                    double.infinity),
+                items: [
+                  PopupMenuItem(
+                    child: CircleAvatar(
+                      child: ClipOval(
+                        child: Image.network(
+                          ref.watch(userProvider)!.profilePic,
+                          height: 40,
+                        ),
+                      ),
+                      //radius: 30,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    child: Text(ref.watch(userProvider)!.name),
+                  ),
+                  PopupMenuItem(
+                    child: Text(ref.watch(userProvider)!.email),
+                  ),
+                  PopupMenuItem(
+                    child: TextButton(
+                      onPressed: () => signout(ref),
+                      child: const Center(child: Text('Sign Out')),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: const BorderSide(
+                              color: AppColors.primayBlueColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+            child: CircleAvatar(
+              child: ClipOval(
+                child: Image.network(
+                  ref.watch(userProvider)!.profilePic,
+                  height: 40,
+                ),
+              ),
+              //radius: 30,
+            ),
+          ),
+          const SizedBox(
+            width: 25,
           ),
         ],
       ),
