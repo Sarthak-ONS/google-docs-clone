@@ -5,6 +5,7 @@ import 'package:google_docs_clone/models/document_model.dart';
 import 'package:google_docs_clone/services/auth_service.dart';
 import 'package:google_docs_clone/services/document_service.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,16 +35,59 @@ class HomeScreen extends ConsumerWidget {
     Routemaster.of(context).push('/document/$documentId');
   }
 
+  // Text(
+  //         'Hi,  ${ref.watch(userProvider)!.name.toString()}, Welcome to DOCS',
+  //         style: const TextStyle(
+  //           fontWeight: FontWeight.w400,
+  //           letterSpacing: 1,
+  //         ),
+  //       )
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: const Color(0xffCAD5E2),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FloatingActionButton.extended(
+          label: const Text('Create'),
+          icon: const Icon(Icons.add),
+          onPressed: () => createDocument(context, ref),
+          backgroundColor: AppColors.primayBlueColor,
+        ),
+      ),
       appBar: AppBar(
+        leading: Center(
+          child: SizedBox(
+            height: 40,
+            child: Image.asset(
+              'assets/images/docs-logo.png',
+              scale: 0.5,
+            ),
+          ),
+        ),
         centerTitle: true,
-        title: Text(
-          'Hi,  ${ref.watch(userProvider)!.name.toString()}, Welcome to DOCS',
-          style: const TextStyle(
-            fontWeight: FontWeight.w400,
-            letterSpacing: 1,
+        title: RichText(
+          text: TextSpan(
+            text: 'Hi, ',
+            style: const TextStyle(
+                fontWeight: FontWeight.w400, color: Colors.white, fontSize: 16),
+            children: [
+              TextSpan(
+                text: '${ref.watch(userProvider)!.name.toString()}, ',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const TextSpan(
+                text: 'Welcome to DOCS',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
           ),
         ),
         elevation: 0,
@@ -179,12 +223,26 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        document.title,
-                        style: const TextStyle(
-                          color: AppColors.primaryFontColor,
-                          fontSize: 15,
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            document.title,
+                            style: const TextStyle(
+                              color: AppColors.primaryFontColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            DateFormat().format(document.createdAt),
+                            style: const TextStyle(
+                              color: Colors.black54,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 12
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),

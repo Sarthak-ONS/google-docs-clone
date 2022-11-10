@@ -4,7 +4,7 @@ class AppColors {
   static const Color primaryFontColor = Colors.black;
   static const Color primayBorderCardColor = Colors.blueAccent;
 
-  static const Color primayBlueColor = Color(0xff0276E8);
+  static const Color primayBlueColor = Color(0xff120E43);
 
   static List colorsList = [
     Colors.blueAccent[100]!,

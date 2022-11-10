@@ -8,12 +8,9 @@ import 'package:google_docs_clone/constants.dart';
 import 'package:google_docs_clone/custom_colors.dart';
 import 'package:google_docs_clone/models/document_model.dart';
 import 'package:google_docs_clone/services/auth_service.dart';
-import 'package:google_docs_clone/services/create_and_downloadPdf.dart';
 import 'package:google_docs_clone/services/document_service.dart';
 import 'package:google_docs_clone/services/socket_service.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-
 import '../models/error_model.dart';
 
 class DocumentScreen extends ConsumerStatefulWidget {
@@ -112,13 +109,9 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
   }
 
   Future<void> _createPDF() async {
-    PdfDocument document = PdfDocument();
-    document.pages.add();
-
-    List<int> bytes = await document.save();
-    document.dispose();
-
-    saveAndLaunchFile(bytes, '${titleController.text}.pdf');
+    print(quill.Document);
+    // await PdfApi.generatePdf(_controller!.getPlainText(),
+    //     docTitle: titleController.text);
   }
 
   @override

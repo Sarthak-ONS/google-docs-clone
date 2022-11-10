@@ -54,6 +54,9 @@ io.on('connection', (socket) => {
 const saveData = async (data) => {
     if (data.delta == null) return
     let document = await Document.findById(data.room);
+    if (data.delta == null) {
+        return
+    }
     document.content = data.delta;
     document = await document.save();
 }
