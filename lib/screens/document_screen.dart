@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +13,7 @@ import 'package:google_docs_clone/services/auth_service.dart';
 import 'package:google_docs_clone/services/document_service.dart';
 import 'package:google_docs_clone/services/socket_service.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 import '../models/error_model.dart';
 
 class DocumentScreen extends ConsumerStatefulWidget {
@@ -109,9 +112,23 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
   }
 
   Future<void> _createPDF() async {
-    print(quill.Document);
-    // await PdfApi.generatePdf(_controller!.getPlainText(),
-    //     docTitle: titleController.text);
+    print(_controller!.plainTextEditingValue.text);
+    PdfDocument document = PdfDocument();
+    //Add a page and draw text
+    document.pages.add().graphics.drawString(
+        _controller!.plainTextEditingValue.text,
+        PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+        bounds: Rect.fromLTWH(20, 60, 150, 30));
+    //Save the document
+    List<int> bytes = await document.save();
+    //Dispose the document
+    document.dispose();
+    AnchorElement(
+        href:
+            "data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}")
+      ..setAttribute("download", "${titleController.text}.pdf")
+      ..click();
   }
 
   @override
